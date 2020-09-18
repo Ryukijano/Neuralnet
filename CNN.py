@@ -1,7 +1,8 @@
-import keras
-from keras.datasets import mnist
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
+import tensorflow.keras
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
+from keras.utils import np_utils
 import matplotlib.pyplot as plt
 import numpy as np
 import itertools
@@ -10,7 +11,7 @@ import os
 
 
 batch_size = 512
-epochs = 1
+epochs = 10
 N_SAMPLES = 30_000
 
 model_directory = 'models'
@@ -35,10 +36,10 @@ x_train = x_train / 255.0
 x_test = x_test / 255.0
 
 #convert class vectors to binary class matrices
-y_train = keras.utils.to_categorical(y_train, num_classes)
-y_test = keras.utils.to_categorical(y_test, num_classes)
+y_train = np_utils.to_categorical(y_train, num_classes)
+y_test = np_utils.to_categorical(y_test, num_classes)
 
-loss = 'sparse_categorical_crossentropy'
+loss = 'categorical_crossentropy'
 optimizer = 'adam'
 
 x_train = x_train[:N_SAMPLES]
@@ -47,15 +48,17 @@ x_test = x_test[:N_SAMPLES]
 y_train = y_train[:N_SAMPLES]
 y_test = y_test[:N_SAMPLES]
 
-kernel_name = [2, 4, 16]
+kernel_names = [2, 4, 16]
 filters = [4, 8, 16]
 kernel_sizes = [(2, 2), (4, 4), (16, 16)]
 
-config = itertools.product(filters, kernel_sizes)
+config = [filters, kernel_sizes, kernel_names]
 
-for n_filters, kernel_size in config:
-    #model_name = 'single-f-' + str(n_filters) + '-k-' + str(kernel_size)
-    model_name = f'single-f-{n_filters}-k-{kernel_size}'
+for n_filters, kernel_size, kernel_name in config:
+    print(config)
+    for nfilter in n_filters:
+        for name in kernel_name:
+            model_name = f'single-f-{nfilter}-k-{name}'
 
 #sampling the data
 #plt.imshow(x_test[1][..., 0], cmap = 'Greys')

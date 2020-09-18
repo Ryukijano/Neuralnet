@@ -36,3 +36,6 @@
  #Emotion recognition:
  1. added a a fer nn. still overfitting. will fix the bugs
 
+ #Added an RNN training:
+ 1. the first LSTM doesnt work
+ 2. LSTM1 workswith 97% accuracy

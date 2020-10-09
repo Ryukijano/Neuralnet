@@ -39,3 +39,6 @@
  #Added an RNN training:
  1. the first LSTM doesnt work
  2. LSTM1 workswith 97% accuracy
+
+#PYTORCH LSTM:
+ 1. added a pytorch lstm to the collection, small but works
